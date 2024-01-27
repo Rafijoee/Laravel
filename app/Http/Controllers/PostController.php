@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class PostController extends Controller
     {   
     $posts = DB::table('posts')
                 ->select('id', 'title', 'content', 'created_at')
+                ->where('active', true)
                 ->get();
     
     $view_data = [
@@ -58,7 +60,7 @@ class PostController extends Controller
 
         $post = DB::table('posts')
                     ->select('id', 'title', 'content', 'created_at')
-                    ->where('id', '=', $id)
+                    ->where('id', $id)
                     ->first();
         $view_data = [
             'post' => $post
@@ -74,7 +76,7 @@ class PostController extends Controller
     {
         $post = DB::table('posts')
                     ->select('id', 'title', 'content', 'created_at')
-                    ->where('id', '=', $id)
+                    ->where('id', $id)
                     ->first();
         $view_data = [
             'post' => $post
@@ -92,10 +94,11 @@ class PostController extends Controller
         $content = $request ->input('content');
 
         DB::table('posts')
-            ->where('id', '=', $id)
+            ->where('id', $id)
             ->update([
                 'title'=> $title,
                 'content'=> $content,
+                'updated_at' => date("Y-m-d H:i:s"),
         ]);
 
         return redirect("posts/{$id}");
