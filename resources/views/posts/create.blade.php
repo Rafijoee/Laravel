@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Buat Postingan Baru</h1>
-    <form method="POST" action="{{url('post')}}" class="form-control">
+    <form method="POST" action="{{url('posts')}}" class="form-control">
     @method('PATCH')
     @csrf
         <div class="mb-3">
