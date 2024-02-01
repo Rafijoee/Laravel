@@ -17,7 +17,7 @@
             <p class="blog-post-meta">Last updated at {{date("d M Y H:i", strtotime($post->created_at))}}
             <p>{{$post->content }}</p>
 
-            <a href="{{ url('post') }}"> < Kembali </a>
+            <a href="{{ url("posts") }}"> < Kembali </a>
 
 
         </article>

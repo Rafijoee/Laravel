@@ -16,7 +16,7 @@ class PostController extends Controller
     {   
     $posts = DB::table('posts')
                 ->select('id', 'title', 'content', 'created_at')
-                ->where('active', true)
+                // ->where('active', true)
                 ->get();
     
     $view_data = [
@@ -107,12 +107,12 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         DB::table('posts')
-            ->where('id', '=',  $id)
+            ->where('id', $id)
             ->delete();
-        
+            
         return redirect('posts');
         
     }

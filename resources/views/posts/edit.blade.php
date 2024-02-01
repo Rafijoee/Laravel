@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Ubah Postingan </h1>
-    <form method="POST" action="{{url ('posts/->$id')}}" class="form-control">
+    <form method="POST" action="{{url ("posts/{$post->id}")}}" class="form-control">
     @method('PATCH')
     @csrf
         <div class="mb-3">
@@ -24,9 +24,9 @@
         </div>
         <button type="submit" class="btn btn-primary"> Simpan !</button>
     </form>
-    <form method="POST" action="url('post')">
-        @method('DELETE')
-        @csrf
+    <form method="POST" action="{{url("posts/$post->id")}}">
+    @method('DELETE')
+    @csrf
         <button type="submit" class="btn btn-danger"> Hapus </button>
     </form>
 </body>
