@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -14,12 +15,16 @@ class PostController extends Controller
      */
     public function index()
     {   
-    $posts = Post::active()->get();
     
-    $view_data = [
-        'posts' => $posts,
-    ];
-        return view('posts.index', $view_data);
+        if(!Auth::check()){
+            return redirect('login');
+        }
+        $posts = Post::active()->get();
+        
+        $view_data = [
+            'posts' => $posts,
+        ];
+            return view('posts.index', $view_data);
     }
 
     /**
@@ -27,6 +32,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
         return view('posts.create');
     }
 
@@ -35,6 +43,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $title = $request ->input("title");
         $content = $request ->input("content");
 
@@ -51,6 +63,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
 
         $post = Post::where('id', $id)->first();
         $comments = $post->comments()->get();
@@ -63,11 +78,12 @@ class PostController extends Controller
         return view ('posts.show', $view_data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $post = Post::where('id', $id)
                     ->first();
         $view_data = [
@@ -82,6 +98,10 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $title = $request ->input('title');
         $content = $request ->input('content');
 
@@ -100,6 +120,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+        
         Post::where('id', $id)
             ->delete();
             
